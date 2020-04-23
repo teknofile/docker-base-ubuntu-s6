@@ -23,8 +23,6 @@ pipeline {
     stage('Docker Linting') {
       steps {
         sh '''
-          pwd
-          ls -alh
           docker run --rm -i hadolint/hadolint < Dockerfile
         '''
       }

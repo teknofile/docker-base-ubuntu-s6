@@ -11,11 +11,12 @@ LABEL build_version="teknofile.org version:- ${VERSION} Build-date:- ${BUILD_DAT
 LABEL maintainer="teknofile <teknofile@teknofile.org>"
 
 
+WORKDIR /
+
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tzdata && \
-    cd /tmp && \
-    wget https://github.com/just-containers/s6-overlay/releases/download/v$S6_OVERLAY_VERSION/s6-overlay-amd64.tar.gz && \
-    tar xzf s6-overlay-amd64.tar.gz -C / && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tzdata curl && \
+    curl -o /tmp/s6-overlay-amd64.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v$S6_OVERLAY_VERSION/s6-overlay-amd64.tar.gz && \
+    tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
     rm s6-overlay-amd64.tar.gz
 
 
