@@ -18,11 +18,10 @@ ENV TZ "America/Denver"
 LABEL build_version="teknofile.org version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="teknofile <teknofile@teknofile.org>"
 
-
 WORKDIR /
 
-RUN apt-get update -y && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN apt-get update -y --no-install-recommends && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   wget=$VERSION_WGET \
   tzdata=$VERSION_TZDATA \
   curl=$VERSION_CURL && \
