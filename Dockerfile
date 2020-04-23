@@ -26,7 +26,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   wget=$VERSION_WGET \
   tzdata=$VERSION_TZDATA \
   curl=$VERSION_CURL && \
-    curl -o /tmp/s6-overlay-amd64.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v$S6_OVERLAY_VERSION/s6-overlay-amd64.tar.gz && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+
+RUN curl -o /tmp/s6-overlay-amd64.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v$S6_OVERLAY_VERSION/s6-overlay-amd64.tar.gz && \
     tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
     rm /tmp/s6-overlay-amd64.tar.gz
 
