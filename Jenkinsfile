@@ -48,13 +48,7 @@ pipeline {
     stage('Build and Publish') {
       steps {
         sh '''
-          docker buildx build \
-            --build-arg VERSION=\"${UBUNTU_VERSION}\" \
-            --build-arg BUILD_DATE=${CURR_DATE} \
-            -t ${TKF_USER}/${CONTAINER_NAME} \
-            --platform=linux/arm,linux/arm65,linux/amd64 \
-            . \
-            --push
+          docker buildx build --build-arg VERSION=\"${UBUNTU_VERSION}\" --build-arg BUILD_DATE=${CURR_DATE} -t ${TKF_USER}/${CONTAINER_NAME} --platform=linux/arm,linux/arm65,linux/amd64 . --push
 
           //docker stop buildx_buildkit_mybuilder0
           //docker rm buildx_buildkit_mybuilder0
