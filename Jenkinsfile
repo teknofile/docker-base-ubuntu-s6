@@ -25,7 +25,7 @@ pipeline {
         sh '''
           pwd
           ls -alh
-          docker run --rm -v ${PWD}:/work:ro hadolint/hadolint:latest-debian hadolint --format json /work/Dockerfile | jq 
+          docker run --rm -v ${PWD}:/work:ro hadolint/hadolint:latest-debian ls /work/ ; hadolint --format json /work/Dockerfile | jq 
         '''
       }
     }
