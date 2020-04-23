@@ -23,6 +23,8 @@ pipeline {
     stage('Docker Linting') {
       steps {
         sh '''
+          pwd
+          ls -alh
           docker run --rm -v ${PWD}:/work:ro hadolint/hadolint:latest-debian hadolint --format json /work/Dockerfile | jq 
         '''
       }
