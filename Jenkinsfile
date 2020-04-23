@@ -20,15 +20,11 @@ pipeline {
         }
       }
     }
-    // Run SHellCheck
-    stage('ShellCheck') {
-      steps {
-        sh '''echo "TODO: Determine a good strategy for finding and scanning shell code"'''
-      }
-    }
     stage('Docker Linting') {
       steps {
-        sh '''echo "TODO: Determine a good strategy for linting a Dockerfile"'''
+        sh '''
+          docker run --rm -v ${PWD}:/work:ro hadolint/hadolint:latest-debian hadolint --format json /work/Dockerfile | jq 
+        '''
       }
     }
     stage('Docker Hardening') {
