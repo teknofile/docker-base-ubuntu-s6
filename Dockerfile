@@ -12,6 +12,7 @@ ARG S6_OVERLAY_VERSION=1.22.1.0
 ARG VERSION_WGET=1.19.4-1ubuntu2.2
 ARG VERSION_TZDATA=2019c-0ubuntu0.18.04
 ARG VERSION_CURL=7.58.0-2ubuntu3.8
+ARG VERSION_CACERT=20180409
 
 ENV TZ "America/Denver"
 
@@ -24,7 +25,8 @@ RUN apt-get update -y --no-install-recommends && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   wget=$VERSION_WGET \
   tzdata=$VERSION_TZDATA \
-  curl=$VERSION_CURL && \
+  curl=$VERSION_CURL 
+  ca-certificates=$VERSION_CACERT && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
