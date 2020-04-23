@@ -21,8 +21,8 @@ LABEL maintainer="teknofile <teknofile@teknofile.org>"
 
 WORKDIR /
 
-RUN apt-get update -y
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN apt-get update -y && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
   wget=$VERSION_WGET \
   tzdata=$VERSION_TZDATA \
   curl=$VERSION_CURL && \
