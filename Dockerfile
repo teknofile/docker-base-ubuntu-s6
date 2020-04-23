@@ -25,7 +25,7 @@ RUN apt-get update -y --no-install-recommends && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   wget=$VERSION_WGET \
   tzdata=$VERSION_TZDATA \
-  curl=$VERSION_CURL 
+  curl=$VERSION_CURL \
   ca-certificates=$VERSION_CACERT && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
