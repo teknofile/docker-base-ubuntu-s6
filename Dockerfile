@@ -17,7 +17,7 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y wget tzdata curl && \
     curl -o /tmp/s6-overlay-amd64.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v$S6_OVERLAY_VERSION/s6-overlay-amd64.tar.gz && \
     tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
-    rm s6-overlay-amd64.tar.gz
+    rm /tmp/s6-overlay-amd64.tar.gz
 
 
 RUN echo "**** create abc user and make our folders ****" && \
