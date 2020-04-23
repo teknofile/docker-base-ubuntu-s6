@@ -25,7 +25,7 @@ pipeline {
         sh '''
           pwd
           ls -alh
-          docker run --rm -v ${PWD}:/work:ro hadolint/hadolint:latest-debian hadolint /work/Dockerfile
+          docker run --rm -i hadolint/hadolint < Dockerfile
         '''
       }
     }
