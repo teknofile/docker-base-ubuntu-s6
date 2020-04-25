@@ -4,7 +4,7 @@ set +x
 
 #TODO: Validate arguments
 
-echo "Downloading and installing the s6-overlay ($2) 
+echo "Downloading and installing the s6-overlay ($2)"
 
 case $1 in
   "linux/amd64")
