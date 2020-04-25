@@ -5,6 +5,11 @@ ARG BUILD_DATE
 ARG VERSION
 ARG S6_OVERLAY_VERSION=1.22.1.0
 
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
+
+
 #ARG VERSION_WGET=1.19.4-1
 #ARG VERSION_TZDATA=2019c-0
 #ARG VERSION_CURL=7.58.0-2
@@ -30,10 +35,10 @@ RUN apt-get update -y --no-install-recommends && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-RUN curl -o /tmp/s6-overlay-amd64.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v$S6_OVERLAY_VERSION/s6-overlay-amd64.tar.gz && \
-    tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
-    rm /tmp/s6-overlay-amd64.tar.gz
 
+# Get the correct version of the s6 overlay and story it in /tmp
+COPY ./build_scripts/get_s6.sh /tmp/
+RUN chmod u+x /tmp/get_s6.sh && /tmp/get_s6.sh $TARGETPLATFORM
 
 RUN echo "**** create abc user and make our folders ****" && \
   groupmod -g 1000 users && \
