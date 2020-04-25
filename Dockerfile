@@ -38,7 +38,7 @@ RUN apt-get update -y --no-install-recommends && \
 
 # Get the correct version of the s6 overlay and story it in /tmp
 COPY ./build_scripts/get_s6.sh /tmp/
-RUN chmod u+x /tmp/get_s6.sh && /tmp/get_s6.sh $TARGETPLATFORM
+RUN chmod u+x /tmp/get_s6.sh && /tmp/get_s6.sh $TARGETPLATFORM $S6_OVERLAY_VERSION
 
 RUN echo "**** create abc user and make our folders ****" && \
   groupmod -g 1000 users && \
