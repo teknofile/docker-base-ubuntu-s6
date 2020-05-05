@@ -34,6 +34,8 @@ RUN apt-get update -y --no-install-recommends && \
 COPY ./build_scripts/get_s6.sh /tmp/
 RUN chmod u+x /tmp/get_s6.sh && /tmp/get_s6.sh $TARGETPLATFORM $S6_OVERLAY_VERSION
 
+COPY root/ /
+
 RUN echo "* create tkf user and make directories for the system to use*" && \
   groupmod -g 999 users && \
   useradd -u 999 -U -d /config -s /bin/false tkf && \
