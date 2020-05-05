@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bash
+
+PUID=${PUID:-999}
+PGID=${PGID:-999}
+
+groupmod -o -g "${PGID}" tkf
+usermod -o -u "${PUID}" tkf
+
+echo 
+echo "*------------------------------------------------*"
+echo "| User uid: $(id -u tkf)                         |"
+echo "| User gid: $(id -g tkf)                         |"
+echo "*------------------------------------------------*"
+echo
+
+chown tkf:tkf /config
+chown tkf:tkf /defaults

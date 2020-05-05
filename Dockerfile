@@ -7,12 +7,6 @@ ARG S6_OVERLAY_VERSION=1.22.1.0
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
-
-
-#ARG VERSION_WGET=1.19.4-1
-#ARG VERSION_TZDATA=2019c-0
-#ARG VERSION_CURL=7.58.0-2
 
 ARG VERSION_WGET=1.19.4-1ubuntu2.2
 ARG VERSION_TZDATA=2019c-0ubuntu0.18.04
@@ -40,12 +34,11 @@ RUN apt-get update -y --no-install-recommends && \
 COPY ./build_scripts/get_s6.sh /tmp/
 RUN chmod u+x /tmp/get_s6.sh && /tmp/get_s6.sh $TARGETPLATFORM $S6_OVERLAY_VERSION
 
-RUN echo "**** create abc user and make our folders ****" && \
-  groupmod -g 1000 users && \
-  useradd -u 911 -U -d /config -s /bin/false abc && \
-  usermod -G users abc && \
+RUN echo "* create tkf user and make directories for the system to use*" && \
+  groupmod -g 999 users && \
+  useradd -u 999 -U -d /config -s /bin/false tkf && \
+  usermod -G users tkf && \
   mkdir -p \
-  /app \
   /config \
   /defaults
 
