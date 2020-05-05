@@ -15,8 +15,10 @@ pipeline {
   }
 
   stages {
-    stage('Setup env') {
+    stage('Setup enviornment and Start ') {
       steps {
+        slackSend (color: '#ffff00', message: "STARTED: Job '${env.JOB_NAME}' [${env.BUILD_NUMBER}]' (${env.BUILD_URL}))
+
         script {
           env.EXIT_STATUS = ''
 
@@ -60,17 +62,19 @@ pipeline {
     stage('Image Scan') {
       steps {
         sh 'curl -s ${SCAN_SCRIPT} | bash -s -- -t 1800 -r -p ${LOCAL_DOCKER_PROXY}${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG}'
+
+        slackUploadFile(filePath: 'anchore-reports/*', initialComment: 'Scan Results')
       }
     }
   }
 
   post {
     success {
-      slackSend(color: '#00FF00', message: "SUCCESSFUL: Jon '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend(color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
 
     failure {
-      slackSend(color: '#FF0000', message: "FAILED: Jon '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend(color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
   }
 }
