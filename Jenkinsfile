@@ -49,6 +49,7 @@ pipeline {
             sh '''
               docker buildx create --use --name mybuilder-${CONTAINER_NAME}
               docker buildx build --build-arg VERSION=${UBUNTU_VERSION} --build-arg BUILD_DATE=${CURR_DATE} -t ${TKF_USER}/${CONTAINER_NAME} -t ${TKF_USER}/${CONTAINER_NAME}:latest -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} --platform=linux/arm,linux/arm64,linux/amd64 . --push
+              docker buildx prune --verbose --builder mybuilder-${CONTAINER_NAME}
               docker buildx rm mybuilder-${CONTAINER_NAME}
             '''
           }

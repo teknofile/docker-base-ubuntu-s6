@@ -33,6 +33,7 @@ RUN apt-get update -y --no-install-recommends && \
 # Get the correct version of the s6 overlay and story it in /tmp
 COPY ./build_scripts/get_s6.sh /tmp/
 RUN chmod u+x /tmp/get_s6.sh && /tmp/get_s6.sh $TARGETPLATFORM $S6_OVERLAY_VERSION
+RUN rm -f /tmp/get_s6.sh
 
 COPY root/ /
 
@@ -43,5 +44,7 @@ RUN echo "* create tkf user and make directories for the system to use*" && \
   mkdir -p \
   /config \
   /defaults
+
+VOLUME /config
 
 ENTRYPOINT ["/init"]
