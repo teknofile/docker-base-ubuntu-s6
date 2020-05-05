@@ -44,12 +44,14 @@ pipeline {
     }
     stage('Build and Publish') {
       steps {
-        withDockerRegistry(credentialsId: 'teknofile-docker-creds') {
-          sh '''
-            docker buildx create --use --name mybuilder-${CONTAINER_NAME}
-            docker buildx build --build-arg VERSION=${UBUNTU_VERSION} --build-arg BUILD_DATE=${CURR_DATE} -t ${TKF_USER}/${CONTAINER_NAME} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} --platform=linux/arm,linux/arm64,linux/amd64 . --push
-            docker buildx rm mybuilder-${CONTAINER_NAME}
-          '''
+        script {
+          withDockerRegistry(credentialsId: 'teknofile-docker-creds') {
+            sh '''
+              docker buildx create --use --name mybuilder-${CONTAINER_NAME}
+              docker buildx build --build-arg VERSION=${UBUNTU_VERSION} --build-arg BUILD_DATE=${CURR_DATE} -t ${TKF_USER}/${CONTAINER_NAME} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} --platform=linux/arm,linux/arm64,linux/amd64 . --push
+              docker buildx rm mybuilder-${CONTAINER_NAME}
+            '''
+          }
         }
       }
     }
