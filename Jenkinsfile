@@ -17,7 +17,7 @@ pipeline {
   stages {
     stage('Setup enviornment and Start ') {
       steps {
-        slackSend (color: '#ffff00', message: "STARTED: Job '${env.JOB_NAME}' [${env.BUILD_NUMBER}]' (${env.BUILD_URL}))
+        slackSend (color: '#ffff00', message: "STARTED: Job '${env.JOB_NAME}' [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 
         script {
           env.EXIT_STATUS = ''
