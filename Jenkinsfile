@@ -63,7 +63,7 @@ pipeline {
       steps {
         sh 'curl -s ${SCAN_SCRIPT} | bash -s -- -t 1800 -r -p ${LOCAL_DOCKER_PROXY}${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG}'
 
-        slackUploadFile(filePath: 'anchore-reports/*', initialComment: 'Scan Results')
+       //  slackUploadFile(filePath: 'anchore-reports/*', initialComment: 'Scan Results')
       }
     }
   }
