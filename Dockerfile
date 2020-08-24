@@ -20,15 +20,22 @@ LABEL maintainer="teknofile <teknofile@teknofile.org>"
 
 WORKDIR /
 
-RUN apt-get update -y --no-install-recommends && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-  wget=$VERSION_WGET \
-  tzdata=$VERSION_TZDATA \
-  curl=$VERSION_CURL \
-  ca-certificates=$VERSION_CACERT && \
+#RUN apt-get update -y --no-install-recommends && \
+#  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+#  wget=$VERSION_WGET \
+#  tzdata=$VERSION_TZDATA \
+#  curl=$VERSION_CURL \
+#  ca-certificates=$VERSION_CACERT && \
+#  apt-get clean && \
+#  rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -y --no-install-recommends && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  wget \
+  tzdata \
+  curl \
+  ca-certificates && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-
 
 # Get the correct version of the s6 overlay and story it in /tmp
 COPY ./build_scripts/get_s6.sh /tmp/
