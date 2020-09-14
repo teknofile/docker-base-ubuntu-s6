@@ -1,9 +1,6 @@
 pipeline {
-  //agent {
-  //  label 'X86-64-MULTI'
-  //}
   agent {
-    any
+    label 'X86-64-MULTI'
   }
 
   environment {
