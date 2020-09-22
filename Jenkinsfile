@@ -49,6 +49,7 @@ pipeline {
         script {
           withDockerRegistry(credentialsId: 'teknofile-docker-creds') {
             sh '''
+              docker run --privileged --rm tonistiigi/binfmt --install all
               docker buildx create --use --name mybuilder-${CONTAINER_NAME}
               docker buildx build --build-arg VERSION=${UBUNTU_VERSION} --build-arg BUILD_DATE=${CURR_DATE} -t ${TKF_USER}/${CONTAINER_NAME}:${UBUNTU_VERSION} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} --platform=linux/arm,linux/arm64,linux/amd64 . --push
               # buildx prune isn't avail everyone i guess
