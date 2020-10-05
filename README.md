@@ -14,7 +14,3 @@ I'm building these images using the docker buildx plugin for arm, arm64 and amd6
 ## Support
 If you need help, open up an [issue on GitHub](https://github.com/teknofile/docker-docker-base-ubuntu-s6).
 
-
- 
- 
- 
