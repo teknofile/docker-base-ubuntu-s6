@@ -54,7 +54,7 @@ pipeline {
                 -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} \
                 -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} \
                 -t ${TKF_USER}/${CONTAINER_NAME}:${UBUNTU_VERSION} \
-                -t ${TKF_USER}/${CONTAINER_NAME}:focal
+                -t ${TKF_USER}/${CONTAINER_NAME}:focal \
                 --platform=linux/arm,linux/arm64,linux/amd64 \
                 . \
                 --push
