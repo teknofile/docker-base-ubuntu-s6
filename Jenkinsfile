@@ -44,8 +44,21 @@ pipeline {
         script {
           withDockerRegistry(credentialsId: 'teknofile-dockerhub') {
             sh '''
-              docker buildx create --use --name mybuilder-${CONTAINER_NAME}
-              docker buildx build --build-arg VERSION=${UBUNTU_VERSION} --build-arg BUILD_DATE=${CURR_DATE} -t ${TKF_USER}/${CONTAINER_NAME} -t ${TKF_USER}/${CONTAINER_NAME}:latest -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} --platform=linux/arm,linux/arm64,linux/amd64 . --push
+              docker buildx create --use --name tkf-builder-${CONTAINER_NAME}-${GITHASH_SHORT}
+
+              docker buildx build \
+                --build-arg VERSION=${UBUNTU_VERSION} \
+                --build-arg BUILD_DATE=${CURR_DATE} \
+                -t ${TKF_USER}/${CONTAINER_NAME} \
+                -t ${TKF_USER}/${CONTAINER_NAME}:latest \
+                -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} \
+                -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} \
+                --platform=linux/arm,linux/arm64,linux/amd64 \
+                . \
+                --push
+
+              docker buildx stop tkf-builder-${CONTAINER_NAME}-${GITHASH_SHORT}
+              docker buildx rm tkf-builder-${CONTAINER_NAME}-${GITHASH_SHORT}
             '''
           }
         }
