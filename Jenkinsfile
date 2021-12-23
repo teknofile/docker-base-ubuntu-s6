@@ -5,7 +5,7 @@ pipeline {
 
   environment {
     CONTAINER_NAME = 'docker-base-ubuntu-s6'
-    TKF_USER = 'wtfo'
+    TKF_USER = 'teknofile'
     UBUNTU_VERSION = '20.04'
   }
 
@@ -53,6 +53,8 @@ pipeline {
                 -t ${TKF_USER}/${CONTAINER_NAME}:latest \
                 -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_LONG} \
                 -t ${TKF_USER}/${CONTAINER_NAME}:${GITHASH_SHORT} \
+                -t ${TKF_USER}/${CONTAINER_NAME}:${UBUNTU_VERSION} \
+                -t ${TKF_USER}/${CONTAINER_NAME}:focal
                 --platform=linux/arm,linux/arm64,linux/amd64 \
                 . \
                 --push
