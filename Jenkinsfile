@@ -9,6 +9,10 @@ pipeline {
     UBUNTU_VERSION = '20.04'
   }
 
+  triggers {
+    cron '@daily'
+  }
+
   stages {
     stage('Setup enviornment and Start ') {
       steps {
