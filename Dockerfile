@@ -15,6 +15,8 @@ LABEL maintainer="teknofile <teknofile@teknofile.org>"
 
 WORKDIR /
 
+COPY sources.list /etc/apt/
+
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get update -y --no-install-recommends && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   wget \
