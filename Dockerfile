@@ -14,8 +14,12 @@ LABEL maintainer="teknofile <teknofile@teknofile.org>"
 
 WORKDIR /
 
+<<<<<<< HEAD
 COPY sources.list /etc/apt/
 
+=======
+RUN apt-get update && apt-get upgrade -y
+>>>>>>> 6a7c6f6f7108cf3c29b9e444b282a92cd35ba0bc
 RUN apt-get update -y --no-install-recommends && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   bash \
   wget \
