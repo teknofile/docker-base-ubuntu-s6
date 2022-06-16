@@ -3,7 +3,7 @@ FROM ubuntu:focal
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG S6_OVERLAY_VERSION=1.22.1.0
+ARG S6_OVERLAY_VERSION=2.2.0.3
 
 ARG TARGETPLATFORM
 
@@ -14,6 +14,8 @@ LABEL maintainer="teknofile <teknofile@teknofile.org>"
 
 WORKDIR /
 
+COPY sources.list /etc/apt/
+
 RUN apt-get update -y --no-install-recommends && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   bash \
   wget \
@@ -23,20 +25,18 @@ RUN apt-get update -y --no-install-recommends && DEBIAN_FRONTEND=noninteractive 
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+
 # Get the correct version of the s6 overlay and story it in /tmp
-COPY ./build_scripts/get_s6.sh /tmp/
-#RUN chmod u+x /tmp/get_s6.sh && /tmp/get_s6.sh $TARGETPLATFORM $S6_OVERLAY_VERSION
+# ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.1/s6-overlay-amd64-installer /tmp/
 
-RUN echo "Downloading and installing S6-overlay for ${TARGETPLATFORM}"
-RUN if [ `uname -m` == "aarch64" ] ; then \
-      curl -o /tmp/s6-overlay.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-aarch64.tar.gz ; \
-  elif [ `uname -m` == "armv7l" ] ; then \
-      curl -o /tmp/s6-overlay.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-armhf.tar.gz ; \
+RUN if [ "${TARGETPLATFORM}" == "linux/arm64" ] ; then \
+      curl -o /tmp/s6-installer -L https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-aarch64-installer ; \
+  elif [ "${TARGETPLATFORM}" == "linux/arm/v7" ] ; then \
+      curl -o /tmp/s6-installer -L https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-armhf-installer ; \
   else \
-      curl -o /tmp/s6-overlay.tar.gz -L https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz ; \
-  fi
-
-RUN tar xzf /tmp/s6-overlay.tar.gz -C /
+      curl -o /tmp/s6-installer -L https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-amd64-installer ; \
+  fi && \
+  chmod +x /tmp/s6-installer && /tmp/s6-installer /
 
 COPY root/ /
 
